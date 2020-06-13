@@ -1,0 +1,76 @@
+
+::-webkit-scrollbar {
+display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #282C34;
+    color: #ccc;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+div{
+  position: relative;
+}
+
+ label {
+  font-weight: bold;
+  padding-left: 3%;
+  }
+  
+.button{
+  background-color: #B0E0E6;
+  border-radius: 10px;
+  border-style: none;
+  font-weight: bold;
+}
+
+.infoDot{
+  font-weight: bold;
+  font-size: 500%;
+  color: orange;
+}
+
+button{
+  background-color: #B0E0E6;
+  border-radius: 10px;
+  border-style: none;
+  font-weight: bold;
+}
+
+input {
+  text-align:center; }
+
+.form {
+  border: solid #47496c;
+  padding: 0.001px;
+}
+
+.table{
+    border: solid #47496c;
+}
+
+table{
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+#add1,#add2,#add3{
+  color: #ccc;
+  font-style: italic;
+  font-size: smaller;
+}
+
+#oscAddr {
+  padding-left: 10%;
+  min-width: 60%;
+}
+
+caption{
+  font-weight: bold;
+   background-color: black;
+}

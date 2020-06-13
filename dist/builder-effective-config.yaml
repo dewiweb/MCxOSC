@@ -1,0 +1,9 @@
+directories:
+  output: dist
+  buildResources: build
+appId: MCxOSC
+linux:
+  target:
+    target: appimage
+    arch: x64
+electronVersion: 9.0.4
