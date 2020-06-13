@@ -74,6 +74,7 @@
 *.css filter=lfs diff=lfs merge=lfs -text
 *.dust filter=lfs diff=lfs merge=lfs -text
 *.ts_ filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
 . !text !filter !merge !diff
 electron filter=lfs diff=lfs merge=lfs -text
 mcxosc filter=lfs diff=lfs merge=lfs -text

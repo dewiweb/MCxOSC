@@ -18,7 +18,8 @@ function createWindow () {
     height: 800,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: `${__dirname}/assets/icons/64x64.png`
   })
 
   // et charger le fichier index.html de l'application.
