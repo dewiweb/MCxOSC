@@ -1,0 +1,9 @@
+/.idea/*
+.vscode
+node_modules
+.*.swp
+/coverage
+package-lock.json
+yarn-error.log
+/lib
+/dist
