@@ -124,9 +124,7 @@ function createWindow () {
 //end of create window
  }
 
-// Cette méthode sera appelée quant Electron aura fini
-// de s'initialiser et prêt à créer des fenêtres de navigation.
-// Certaines APIs peuvent être utilisées uniquement quand cet événement est émit.
+
 app.whenReady().then(createWindow)
 //console.log('voilà cest pret')
 // Quitter si toutes les fenêtres ont été fermées.
@@ -146,4 +144,3 @@ app.on('activate', () => {
   }
 })
 
-// Dans ce fichier, vous pouvez inclure le reste de votre code spécifique au processus principal. Vous pouvez également le mettre dans des fichiers séparés et les inclure ici.

@@ -21,8 +21,6 @@ ipcRenderer.on('sendEmberValue', function(event, emberValue, whichRow, whichCell
   var table = document.getElementById("tableOfConnection");
   var emberValue = emberValue;
   table.rows[whichRow].cells[whichCell].innerHTML = emberValue;
-
-
 })
 
 
