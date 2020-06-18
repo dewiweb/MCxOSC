@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8d02acf9f308bcff2784ff2d37ef21d9503947c65518b2ae6733a3a4697880d4
-size 1004
+{
+  "name": "mcxosc",
+  "version": "0.0.3-alpha",
+  "description": "An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles/ based on https://github.com/nrkno/tv-automation-emberplus-connection",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "dewiweb",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  },
+  "dependencies": {
+    "osc": "^2.4.1",
+    "asn1": "evs-broadcast/node-asn1",
+    "enum": "^2.4.0",
+    "long": "^3.2.0",
+    "smart-buffer": "^3.0.3",
+    "winston": "^2.1.1",
+    "winston-color": "^1.0.0"
+  },
+  "build": {
+    "appId": "MCxOSC",
+    "linux": {
+      "category": "AudioVideo",
+      "icon": "./assets/icons",
+      "target": {
+        "target": "appimage",
+        "arch": "x64"
+      }
+    }
+  }
+}
