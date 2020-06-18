@@ -77,38 +77,50 @@
       <div class="form">
 
         <label style="text-align: center;" for="fname">STEP 4 &#8674; &ensp;  Connect Ember+ Path to OSC Address</label><br><br>
-        <label for="fname">.Choose an Ember+ Path</label>
+        <label for="fname">.Choose an Ember+ Parameter</label>
         <br>
         <br>
         <form id="form4" onsubmit ="return false">
 
-          <b style="font-weight: normal; font-size: smaller; padding-left: 10%;">Channels.</b>
-          <select id="slct0" name="slct0" required onchange="setEchanNumbPrefix(this.value)" >
+          <b class="hideOnAdvanced" style="font-weight: normal; font-size: smaller; padding-left: 10%;">Channels.</b>
+          <select class="hideOnAdvanced" id="slct0" name="slct0" required onchange="setEchanNumbPrefix(this.value)" >
             <option value="">----</option>
             <option value="Inputs">Inputs</option>
             <option value="GP Channels">GP Channels</option>
             <option value="Sums">Sums</option>
-          </select><b>.</b>
-          <label for="iname" style="display: inline-block; font-weight: normal; font-size: 80%; padding-left: 0%;">Ch. Prefix
-            <input type="text" style="display: block;" id="eChanNumbPrefix" name="eChanNumbPrefix" value="" size="3" required>
+          </select><b class="hideOnAdvanced" >.</b>
+          <label class="hideOnAdvanced" for="iname" style="display: inline-block; font-weight: normal; font-size: 80%; padding-left: 0%;">Ch. Prefix
+            <input class="stayOnAdvanced" type="text" style="display: block;" id="eChanNumbPrefix" name="eChanNumbPrefix" value="" size="3" required>
           </label>
-          <label for="iname" style="display: inline-block; font-weight: normal; font-size: 80%; padding-left: 0%;">Ch. Number
+          <label class="hideOnAdvanced" for="iname" style="display: inline-block; font-weight: normal; font-size: 80%; padding-left: 0%;">Ch. Number
             <input type="number" style="display: block;" id="eChanNumb" name="eChanNumber" min="1" max="128" maxlength="3" size="3" autocomplete="on" required value="1">
-          </label><b>.</b>
-          <select id="slct1" name="slct1" onchange=" populate(this.id,'slct2','invisibleA')" required>
+          </label><b class="hideOnAdvanced">.</b>
+          <select class="hideOnAdvanced" id="slct1" name="slct1" onchange=" populate(this.id,'slct2','invisibleA', this.selectedIndex)" required>
             <option value="">----</option>
             <option value="Channel States">Channel States</option>
             <option value="Mute">Mute</option>
             <option value="Fader">Fader</option>
             <option value="Pan">Pan</option>
             <option value="Signal Processing">Signal Processing</option>
+            <option value="Assignements">Assignements</option>
           </select>
-          <b id="invisibleA" style="visibility:hidden;"> .</b>
-          <select id="slct2" name="slct2" style="visibility:hidden;" onchange="populate(this.id,'slct3','invisibleB')"></select>
-          <b id="invisibleB" style="visibility:hidden;">.</b>
-          <select id="slct3" name="slct3" style="visibility:hidden;"></select>
-          <input class="button" id="suscribe" style="text-align: center;" type="submit" value="Add!" >
+          <b  id="invisibleA" style="visibility:hidden;"> .</b>
+          <select  id="slct2" name="slct2" style="visibility:hidden;" onchange="populate(this.id,'slct3','invisibleB', this.selectedIndex), selectedOption(this.id)"></select>
+          <b  id="invisibleB" style="visibility:hidden;">.</b>
+          <select  id="slct3" name="slct3" style="visibility:hidden;" onchange="selectedOption(this.id)"></select>
+          
+            <input class="button" id="suscribe" style="text-align: center;" type="submit" value="Add!" >
+           
           <br>
+          <br>
+          <div style="display:block; padding-left: 7%; font-weight: normal; font-size: smaller;">
+        <div  class='toggle' id='switcher' >
+          <script>switcher.addEventListener('click', advancedMode)</script>
+          <div class='glow-comp'></div>
+          <div class='toggle-button'></div>
+        </div>
+        <span style="font-style: italic;" title="examples:&#10;10623.126277.126278.126283.126284&#10;_2/_4/_1/_400016b0/_400016b1">Advanced Mode(put an ember+ path if you know it!)</span>
+          </div>
           <br>
         </form>
         <form id="form5" onsubmit ="return false">
@@ -139,6 +151,9 @@
           <td>Value</td>
           <td>Address</td>
           <td></td>
+          <td>type</td>
+          <td>Min</td>
+          <td>Max</td>
         </tr>
 
       </table>
@@ -148,6 +163,6 @@
     form4.addEventListener('submit', fillOscAddr);
     form4.addEventListener('submit', submitEmberPath);
     form5.addEventListener('submit', modifyOscAddr)
-    </script>
+        </script>
   </body>
   </html>

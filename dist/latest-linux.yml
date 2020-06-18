@@ -1,0 +1,9 @@
+version: 0.0.3-alpha
+files:
+  - url: mcxosc-0.0.3-alpha.AppImage
+    sha512: Mcjj1bGL25vDM7gux8lyte9VbTrMoXpLl2Aviz3NlUvD7EWtUfuZQs5yczfzi0YgjWs2tX+YJuGLoeK4lu/2vw==
+    size: 76503564
+    blockMapSize: 80416
+path: mcxosc-0.0.3-alpha.AppImage
+sha512: Mcjj1bGL25vDM7gux8lyte9VbTrMoXpLl2Aviz3NlUvD7EWtUfuZQs5yczfzi0YgjWs2tX+YJuGLoeK4lu/2vw==
+releaseDate: '2020-06-18T11:42:33.468Z'

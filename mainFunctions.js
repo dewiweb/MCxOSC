@@ -3,7 +3,8 @@ function oscToEmber(oscBundle) {
     oscArgs = oscArgs.replace(/\s|\[|\]/g,"");
     oscArgs = JSON.parse(oscArgs);
     oscArgs = oscArgs.value;
-    oscArgs = (Number(oscArgs)*32).toFixed(0);
+   // oscArgs = (Number(oscArgs)*32).toFixed(0);
+   oscArgs = Number(oscArgs);
     return oscArgs
 }
 

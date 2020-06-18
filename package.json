@@ -1,6 +1,6 @@
 {
   "name": "mcxosc",
-  "version": "1.0.0",
+  "version": "0.0.3-alpha",
   "description": "An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles/ based on https://github.com/nrkno/tv-automation-emberplus-connection",
   "main": "main.js",
   "scripts": {
@@ -28,6 +28,8 @@
   "build": {
     "appId": "MCxOSC",
     "linux": {
+      "category": "AudioVideo",
+      "icon": "./assets/icons",
       "target": {
         "target": "appimage",
         "arch": "x64"

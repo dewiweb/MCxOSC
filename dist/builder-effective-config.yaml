@@ -3,6 +3,8 @@ directories:
   buildResources: build
 appId: MCxOSC
 linux:
+  category: AudioVideo
+  icon: ./assets/icons
   target:
     target: appimage
     arch: x64

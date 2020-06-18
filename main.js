@@ -7,7 +7,8 @@ const electron = require('electron')
 const ipcMain = require('electron').ipcMain
 const nativeTheme = electron.nativeTheme;
       nativeTheme.themeSource = 'dark';
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const mainFunctions = require('./mainFunctions');
 
 
 function createWindow () {
@@ -69,7 +70,9 @@ function createWindow () {
             win.webContents.send('oServerOK');
 
             //Create ember+ subscription when connection send
-            ipcMain.on('newConnection', async function(event, ePath, oAddr, myRow){
+            ipcMain.on('newConnection', async function(event, ePath, oAddr, myRow, eVarType, sFactor){
+              console.log("sFactor",sFactor);
+              sFactor= Number(sFactor);
               const req = await c.getElementByPath(ePath)
               c.subscribe(req, () => {
                 var emberValue = req.contents.value;
@@ -81,38 +84,56 @@ function createWindow () {
 
                 console.log("stringEpath", stringEpath);
 
-                faderOrNot = stringEpath.includes("Prout");
-                panOrNot = stringEpath.includes("Left-Right Panning");
-                if(faderOrNot = true){
-                  console.log("faderOrNot", faderOrNot);
+               // faderOrNot = stringEpath.includes("Fader");
+               // panOrNot = stringEpath.includes("Panning");
+               // booleanOrNot = stringEpath.includes("Mute")||stringEpath.includes("On")||stringEpath.includes("States");
+                if(eVarType == "Integer"){
+                 // console.log("fader", faderOrNot);
 
                   oscCli.send({
                     address: oAddr,
                     args: [
                       {
                         type: "f",
-                        value: Number(req.contents.value)/32,
+                        value: Number(req.contents.value)/Number(sFactor),
                       }
                           ]
                               },  oServerIP, oServerPort);
 
            console.log('EMBER+ --> OSC : ', req.contents.value)
 
-          }else if (panOrNot = true) {
-            console.log("panOrNot", panOrNot);
-
-            oscCli.send({
-                  address: oAddr,
-                  args: [
-                     {
-                       type: "f",
-                       value: Number(req.contents.value),
-                     }
-                        ]
-                        },  oServerIP, oServerPort);
+          }else if (eVarType == "Boolean") {
+            
+                        oscCli.send({
+                          address: oAddr,
+                        args: [
+                          {
+                            type: "s",
+                            value: req.contents.value.toString(),
+                          }
+                        ]                        }, oServerIP, oServerPort);
                         console.log('EMBER+ --> OSC : ', req.contents.value)
+
                       }
                     })
+                    oscCli.on("message", function (oscBundle) {
+
+                      console.log('oscBundle : ', oscBundle);
+                      const oRaddr = JSON.stringify(oscBundle.address);
+                      console.log("Adresse osc reçue",oRaddr);           
+                      const oRargs = mainFunctions.oscToEmber(oscBundle);
+                       win.webContents.send('oReceivedAddr', oRaddr, oRargs);
+                       
+                        
+                  })
+                    
+                  })
+                  ipcMain.on('reSendOrArgs', async function(event, rOrArgs, rEaddr, sFactor){
+                    const rereq = await c.getElementByPath(rEaddr);
+                    sFactor = Number(sFactor);
+                   c.setValue((rereq), (rOrArgs*sFactor).toFixed(0));
+         
+                   console.log('OSC --> EMBER+ : ', (rOrArgs*sFactor).toFixed(0));
                   })
                 })
               })
