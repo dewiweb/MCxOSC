@@ -13,7 +13,7 @@
   "author": "dewiweb",
   "license": "MIT",
   "devDependencies": {
-    "electron": "latest",
+    "electron": "^9.0.4",
     "electron-builder": "latest"
   },
   "dependencies": {
