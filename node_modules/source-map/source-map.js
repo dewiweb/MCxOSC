@@ -1,8 +1,3 @@
-/*
- * Copyright 2009-2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE.txt or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-exports.SourceMapGenerator = require('./lib/source-map-generator').SourceMapGenerator;
-exports.SourceMapConsumer = require('./lib/source-map-consumer').SourceMapConsumer;
-exports.SourceNode = require('./lib/source-node').SourceNode;
+version https://git-lfs.github.com/spec/v1
+oid sha256:dc098456c2d9ab90a4c0a17cca9be16665b9813df20906553a98b0088a157be7
+size 405
