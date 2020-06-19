@@ -213,7 +213,7 @@ function populate(s1,s2,s3,s4){
         "Fader Level|Fader Level|Integer|\nmin:-4096|\nmax:480|\nfactor:32|\n-"];
       }else if(s1.value == "Slider"){
         var optionArray = ["|----|||||",
-        "Fader Position|Fader Position|Integer|\nmin:0|\nmax:100|\nfactor:0|\n-"];
+        "Fader Position|Fader Position|Integer|\nmin:0|\nmax:100|\nfactor:1|\n-"];
       }else if(s1.value == "Pan"){
         var optionArray = ["|----|||||",
         "Left-Right Panning|Left-Right Panning|Integer|\nmin:-20|\nmax:20|\nfactor:1|\n-",
