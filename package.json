@@ -1,6 +1,6 @@
 {
   "name": "mcxosc",
-  "version": "0.0.3-alpha",
+  "version": "0.0.4-alpha",
   "description": "An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles/ based on https://github.com/nrkno/tv-automation-emberplus-connection",
   "main": "main.js",
   "scripts": {
@@ -13,11 +13,11 @@
   "author": "dewiweb",
   "license": "MIT",
   "devDependencies": {
-    "electron-builder": "latest"
+    "electron": "9.0.4",
+    "electron-builder": "^22.7.0"
   },
   "dependencies": {
     "asn1": "evs-broadcast/node-asn1",
-    "electron": "^9.0.4",
     "enum": "^2.4.0",
     "long": "^3.2.0",
     "osc": "^2.4.1",
