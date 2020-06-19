@@ -85,7 +85,13 @@ function setEchanNumbPrefix (typeOfChan){
   } else if (typeOfChan == "GP Channels") {
     eChanNumbPrefix.value = "GPC";
   } else if (typeOfChan == "Sums") {
-    eChanNumbPrefix.value = "SUM"
+    eChanNumbPrefix.value = "SUM";
+  } else if (typeOfChan == "Auxes"){
+    eChanNumbPrefix.value = "AUX";
+  } else if (typeOfChan == "Masters"){
+    eChanNumbPrefix.value = "VCA";
+  }else if (typeOfChan == "Groups"){
+    eChanNumbPrefix.value = "GRP";
   }
 }
 
