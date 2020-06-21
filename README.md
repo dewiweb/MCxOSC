@@ -2,7 +2,7 @@
 An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles
 Based on https://github.com/nrkno/tv-automation-emberplus-connection
 "WORK-IN-PROGRESS!"
-![Screenshot](MCxOSC_v0.0.4-alpha.png)
+![Screenshot](MCxOSC_v0.0.5-alpha.png)
 # ToDo
 - [X] Enable data persistency
 - [ ] Enable frame free window
