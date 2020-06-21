@@ -9,6 +9,13 @@ const nativeTheme = electron.nativeTheme;
       nativeTheme.themeSource = 'dark';
 const { app, BrowserWindow } = require('electron');
 const mainFunctions = require('./mainFunctions');
+//var remote = require('remote');
+const {dialog} = require('electron')
+const fs = require('fs');
+const { openFile } = require('./mainFunctions');
+const recOptions = {
+  defaultPath: app.getPath('documents') + '/MySession.session',
+}
 
 
 function createWindow () {
@@ -22,12 +29,70 @@ function createWindow () {
     },
     icon: `${__dirname}/assets/icons/64x64.png`
   })
-
+    
   // et charger le fichier index.html de l'application.
   win.loadFile('index.html')
-
+  
   // Ouvre les DevTools.
   //win = null
+
+
+  //Menu//
+  ipcMain.on('sendSaveAs', function(event, content){
+    console.log(content);
+    //var content = JSON.stringify(content)
+   // var content = "Some text to save into the file";
+    filename = dialog.showSaveDialog(null, recOptions,{}
+      ).then(result => {
+        filename = result.filePath;
+        if (filename === undefined) {
+          console.log('the user clicked the btn but didn\'t created a file');
+          
+        }
+        fs.writeFile(filename, content, (err) => {
+          if (err) {
+           console.log('an error ocurred with file creation ' + err.message);
+                     }
+         console.log('WE CREATED YOUR FILE SUCCESFULLY');
+         win.webContents.send('sendFilename', filename);
+        })
+      })
+  })
+
+  ipcMain.on('sendSave', function(event, content, rSfilename){
+    console.log("sendsave filepath", rSfilename);
+    console.log("sendsave content", content);
+    
+    if (rSfilename === undefined) {
+      console.log('the user clicked the btn but didn\'t created a file');
+      
+    }
+    fs.writeFile(rSfilename, content, (err) => {
+      if (err) {
+       console.log('an error ocurred with file creation ' + err.message);
+                 }
+     console.log('WE CREATED YOUR FILE SUCCESFULLY');
+     //win.webContents.send('sendFilename', filename);
+    })
+  })
+
+  ipcMain.on('openFile', function (event) { 
+            filename = dialog.showOpenDialog({properties: ['openFile', 'multiSelections']})
+            .then(result =>{
+              filename = result.filePaths;
+              console.log(filename);
+              const file = filename[0];
+              console.log(file);
+              
+              const content = fs.readFileSync(file, 'utf-8');
+              console.log(content);
+              var sendedContent = JSON.stringify(content);
+              console.log('sendedContent:', sendedContent);
+              win.webContents.send("sendFileContent", sendedContent)
+              win.webContents.send('sendFilename', file)
+            })
+        })
+   ////////////////////////
 
   //Setup du port UDP de reception OSC
   ipcMain.on('sendUDPport', function(event, oUDPport) {
@@ -142,11 +207,16 @@ function createWindow () {
 
     })
   })
+  // win.setAutoHideMenuBar(true)
+  win.autoHideMenuBar = "true"
+  win.menuBarVisible = "false"
+  win.w
 //end of create window
  }
 
 
 app.whenReady().then(createWindow)
+
 //console.log('voilà cest pret')
 // Quitter si toutes les fenêtres ont été fermées.
 app.on('window-all-closed', () => {

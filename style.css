@@ -58,6 +58,12 @@ table{
 table, th, td {
   border: 1px solid black;
 }
+.hiddenTd{
+  visibility: hidden;
+}
+.little{
+  font-size: x-small;
+}
 
 #add1,#add2,#add3{
   color: #ccc;
@@ -144,4 +150,20 @@ caption{
   opacity: 1;
   -webkit-transition: opacity 1s;
   transition: opacity 1s;
+}
+
+/*Menu*/
+#menu {
+  background-color: #47496c;
+  border-radius: 10px;
+  width: 50%;
+  margin: 0 auto;
+  
+}
+
+#menu .button {
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+  
 }

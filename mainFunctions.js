@@ -1,3 +1,6 @@
+const {dialog} = require('electron');
+const fs = require('fs');
+
 function oscToEmber(oscBundle) {
  let oscArgs = JSON.stringify(oscBundle.args);
     oscArgs = oscArgs.replace(/\s|\[|\]/g,"");
@@ -31,5 +34,7 @@ function addressToPath (address){
       path = path.slice(1);
       return path
 }
+
+
 
 module.exports = { oscToEmber, embChPath, embFadLevPath, pathToAddress, addressToPath }

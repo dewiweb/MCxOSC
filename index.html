@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>MCxOSC</title>
+    <title>MCxOSC - unsaved.session</title>
     <script script type="text/javascript" src="renderer.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
@@ -11,7 +11,13 @@
     <div id="header" style="text-align: center;">
       <img src="./assets/MxOSC-dark-bann.png" alt="" style=" max-width: 25%; height: auto;" class="center"/>
     </div>
-
+    
+    <div id="menu" class="center" style="font-weight: bold; padding-left: 2%;">Yes, You can &#8674; &ensp; 
+      <button class="button loadBtn" id="loadBtn" onclick="load(this.id)">Load Session</button>
+      <button class="button saveAsBtn" id="saveAsBtn" onclick="saveAs(this.id)">Save Session as...</button>
+      <button class="button saveBtn" id="saveBtn" onclick="save(this.id)">Update Session</button>
+    </div>
+      <br>
     <div id="Network_Settings">
       <div class="form">
         <form id="form1">
@@ -149,18 +155,21 @@
           <th></th>
         </tr>
         <tr>
-          <td>Path</td>
-          <td>Value</td>
-          <td>&harr;</td>
-          <td>Value</td>
-          <td>Address</td>
+          <td>PATH</td>
+          <td class="little">Ember+Value</td>
+          <td class="little">Factor</td>
+          <td class="little">OSC value</td>
+          <td>ADDRESS</td>
           <td></td>
           <td>type</td>
-          <td>Min</td>
-          <td>Max</td>
+          <td class="hiddenTd"></td>
+          <td class="little">Min</td>
+          <td class="hiddenTd"></td>
+          <td class="little">Max</td>
         </tr>
 
       </table>
+      
     </div>
 
     <script>
@@ -169,4 +178,9 @@
     form5.addEventListener('submit', modifyOscAddr)
         </script>
   </body>
+  <footer class="little">
+    <p>path to actual file :
+      <span id="filepath"></span>
+    </p>
+  </footer>
   </html>
