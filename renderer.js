@@ -69,6 +69,10 @@ ipcRenderer.on('sendFilename', function(event,filename){
 })
 
 ipcRenderer.on('sendFileContent', function(event, content){
+  var table = document.getElementById("tableOfConnection");
+  for (var i = 2; i<table.rows.length; i++){
+     table.deleteRow(i)
+  }
     var sendedJSON = JSON.parse(content);
   var sendedJSON = sendedJSON.replace(/\\n/g,"");
   var sendedJSON = JSON.parse(sendedJSON);
@@ -116,7 +120,7 @@ ipcRenderer.on('sendFileContent', function(event, content){
       btnDel.setAttribute('onClick','SomeDeleteRowFunction(this)');
       btnGo.innerHTML = "Go!";
       btnGo.setAttribute('onClick','sendConnection(this)');
-      var table = document.getElementById("tableOfConnection");
+      
       var row = table.insertRow(-1);
       row.style.fontSize = "smaller";
       var cell1 = row.insertCell(0);
@@ -148,6 +152,18 @@ ipcRenderer.on('sendFileContent', function(event, content){
     }
   });
 })
+
+function addGenBtns (){
+  var table = document.getElementById("tableOfConnection");
+  var btnSuscribeAll = document.createElement("BUTTON");
+  var btnDeleteAll = document.createElement("BUTTON");
+  btnDeleteAll.innerHTML = "Delete All"
+  btnDeleteAll.setAttribute('onClick','deleteAllRows(this)'); //function not created yet
+  btnSuscribeAll.innerHTML = "Go All!"
+  btnSuscribeAll.setAttribute('onClick','sendAllConnections(this)');
+  table.rows[1].cells[5].appendChild(btnSuscribeAll);
+  table.rows[1].cells[5].appendChild(btnDeleteAll);
+}
 
 
 function makeVisible (op){
@@ -220,8 +236,6 @@ function displayForm3 (event){
 function submitEmberPath (event){
       var btnDel = document.createElement("BUTTON");
       var btnGo = document.createElement("BUTTON");
-      var btnSuscribeAll = document.createElement("BUTTON");
-      var btnDeleteAll = document.createElement("BUTTON");
       var switcher = document.getElementById("switcher");
       var oscAddr = document.getElementById("oscAddr").value;
       var slct0 = document.getElementById("slct0").value;
@@ -253,12 +267,9 @@ function submitEmberPath (event){
       eVarMin = 0;
       eVarMax = 0
     };
-      btnDeleteAll.innerHTML = "Delete All"
-      //btnDel.setAttribute('onClick','AllDeleteRowFunction(this)'); //function not created yet
+      
       btnDel.innerHTML = "X";
       btnDel.setAttribute('onClick','SomeDeleteRowFunction(this)');
-      btnSuscribeAll.innerHTML = "Go All!"
-      btnGo.setAttribute('onClick','sendAllConnections(this)');//function to be created!!
       btnGo.innerHTML = "Go!";
       btnGo.setAttribute('onClick','sendConnection(this)');
       var table = document.getElementById("tableOfConnection");
@@ -292,12 +303,9 @@ function submitEmberPath (event){
       cell3.style.fontSize ='x-small';
       cell9.style.fontSize ='x-small';
       cell11.style.fontSize ='x-small';
-      var firstCon = table.rows.length;
-      console.log("firstcon?", firstCon);
-    //  if (firstCon == 3){
-    //    table.rows[1].cells[5].appendChild(btnSuscribeAll);
-    //    table.rows[1].cells[5].appendChild(btnDeleteAll);
-    //  };
+      if (table.rows.length == 3){
+        addGenBtns();
+      };
       event.preventDefault();
 
 }
@@ -486,15 +494,32 @@ function modifyOscAddr(event){
 }
 
 function SomeDeleteRowFunction(o) {
+  var table = document.getElementById("tableOfConnection");
+  if(typeof o == "number"){
+    table.deleteRow(o)}
+    else{
      //no clue what to put here?
      var p=o.parentNode.parentNode;
          p.parentNode.removeChild(p);
+    }
+}
+
+function deleteAllRows(o) {
+  var table = document.getElementById("tableOfConnection");
+  var numOfConn = table.rows.length;
+  for (var x=numOfConn-1; x>1; x--) {
+    table.deleteRow(x);
+ }
 }
 
 function sendConnection(o){
-    var table = document.getElementById("tableOfConnection");
+  var table = document.getElementById("tableOfConnection");
+  if(typeof o == "number"){
+    myRow = o}
+    else{
+  console.log("ooo",o.attributes)
     var p=o.parentNode.parentNode;
-    var myRow = p.rowIndex;
+   myRow = p.rowIndex;}
     console.log(myRow);
     //sFactor = factor;
     var ePath = table.rows[myRow].cells[0].innerHTML;
@@ -512,15 +537,10 @@ function sendConnection(o){
 function sendAllConnections(o){
   var table = document.getElementById("tableOfConnection");
   //var numOfConn = table.rows.length;
-  for (var i = 2; i<table.rows.length; i++){
-    var myRow = table.rows[i]
-    console.log("MYROW", myRow);
-    
-    var ePath = table.rows[myRow].cells[0].innerHTML;
-    var oAddr = table.rows[myRow].cells[4].innerHTML;
-    var eVarFactor = table.rows[myRow].cells[2].innerHTML;
-    var eVarType = table.rows[myRow].cells[6].innerHTML;
-    ipcRenderer.send('newConnection', ePath, oAddr, myRow, eVarType, eVarFactor);
+  for (let i = 2; i<table.rows.length; i++){
+    setTimeout(() => {
+    sendConnection(i);
+  }, i*10);
   }
 }
 
@@ -695,7 +715,13 @@ ipcRenderer.send('sendSave', content, filename)
 }
 
 function load(loadBtn){
+  
   ipcRenderer.send('openFile')
+  var table = document.getElementById("tableOfConnection");
+  var genBtn = table.rows[1].cells[5].innerHTML;
+  if ( genBtn == ""){
+  addGenBtns()
+  }
 }
 
 function tableToJson(table) {

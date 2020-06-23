@@ -149,12 +149,7 @@ function createWindow () {
 
                 console.log("stringEpath", stringEpath);
 
-               // faderOrNot = stringEpath.includes("Fader");
-               // panOrNot = stringEpath.includes("Panning");
-               // booleanOrNot = stringEpath.includes("Mute")||stringEpath.includes("On")||stringEpath.includes("States");
                 if(eVarType == "Integer"){
-                 // console.log("fader", faderOrNot);
-
                   oscCli.send({
                     address: oAddr,
                     args: [
@@ -165,9 +160,9 @@ function createWindow () {
                           ]
                               },  oServerIP, oServerPort);
 
-           console.log('EMBER+ --> OSC : ', req.contents.value)
+                              console.log('EMBER+ --> OSC : ', req.contents.value)
 
-          }else if (eVarType == "Boolean") {
+                  }else if (eVarType == "Boolean") {
             
                         oscCli.send({
                           address: oAddr,
