@@ -220,6 +220,8 @@ function displayForm3 (event){
 function submitEmberPath (event){
       var btnDel = document.createElement("BUTTON");
       var btnGo = document.createElement("BUTTON");
+      var btnSuscribeAll = document.createElement("BUTTON");
+      var btnDeleteAll = document.createElement("BUTTON");
       var switcher = document.getElementById("switcher");
       var oscAddr = document.getElementById("oscAddr").value;
       var slct0 = document.getElementById("slct0").value;
@@ -251,9 +253,12 @@ function submitEmberPath (event){
       eVarMin = 0;
       eVarMax = 0
     };
-
+      btnDeleteAll.innerHTML = "Delete All"
+      //btnDel.setAttribute('onClick','AllDeleteRowFunction(this)'); //function not created yet
       btnDel.innerHTML = "X";
       btnDel.setAttribute('onClick','SomeDeleteRowFunction(this)');
+      btnSuscribeAll.innerHTML = "Go All!"
+      btnGo.setAttribute('onClick','sendAllConnections(this)');//function to be created!!
       btnGo.innerHTML = "Go!";
       btnGo.setAttribute('onClick','sendConnection(this)');
       var table = document.getElementById("tableOfConnection");
@@ -287,7 +292,12 @@ function submitEmberPath (event){
       cell3.style.fontSize ='x-small';
       cell9.style.fontSize ='x-small';
       cell11.style.fontSize ='x-small';
-
+      var firstCon = table.rows.length;
+      console.log("firstcon?", firstCon);
+    //  if (firstCon == 3){
+    //    table.rows[1].cells[5].appendChild(btnSuscribeAll);
+    //    table.rows[1].cells[5].appendChild(btnDeleteAll);
+    //  };
       event.preventDefault();
 
 }
@@ -497,6 +507,21 @@ function sendConnection(o){
 
     ipcRenderer.send('newConnection', ePath, oAddr, myRow, eVarType, eVarFactor);
 
+}
+
+function sendAllConnections(o){
+  var table = document.getElementById("tableOfConnection");
+  //var numOfConn = table.rows.length;
+  for (var i = 2; i<table.rows.length; i++){
+    var myRow = table.rows[i]
+    console.log("MYROW", myRow);
+    
+    var ePath = table.rows[myRow].cells[0].innerHTML;
+    var oAddr = table.rows[myRow].cells[4].innerHTML;
+    var eVarFactor = table.rows[myRow].cells[2].innerHTML;
+    var eVarType = table.rows[myRow].cells[6].innerHTML;
+    ipcRenderer.send('newConnection', ePath, oAddr, myRow, eVarType, eVarFactor);
+  }
 }
 
   function selectedOption(slct){
