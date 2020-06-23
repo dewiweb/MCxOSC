@@ -70,9 +70,7 @@ ipcRenderer.on('sendFilename', function(event,filename){
 
 ipcRenderer.on('sendFileContent', function(event, content){
   var table = document.getElementById("tableOfConnection");
-  for (var i = 2; i<table.rows.length; i++){
-     table.deleteRow(i)
-  }
+  deleteAllRows();
     var sendedJSON = JSON.parse(content);
   var sendedJSON = sendedJSON.replace(/\\n/g,"");
   var sendedJSON = JSON.parse(sendedJSON);
@@ -159,7 +157,7 @@ function addGenBtns (){
   var btnDeleteAll = document.createElement("BUTTON");
   btnDeleteAll.innerHTML = "Delete All"
   btnDeleteAll.setAttribute('onClick','deleteAllRows(this)'); //function not created yet
-  btnSuscribeAll.innerHTML = "Go All!"
+  btnSuscribeAll.innerHTML = "Connect All!"
   btnSuscribeAll.setAttribute('onClick','sendAllConnections(this)');
   table.rows[1].cells[5].appendChild(btnSuscribeAll);
   table.rows[1].cells[5].appendChild(btnDeleteAll);
@@ -304,7 +302,8 @@ function submitEmberPath (event){
       cell9.style.fontSize ='x-small';
       cell11.style.fontSize ='x-small';
       if (table.rows.length == 3){
-        addGenBtns();
+        if(table.rows[1].cells[5].innerHTML == ""){ addGenBtns();
+        }
       };
       event.preventDefault();
 
@@ -540,7 +539,7 @@ function sendAllConnections(o){
   for (let i = 2; i<table.rows.length; i++){
     setTimeout(() => {
     sendConnection(i);
-  }, i*10);
+  }, i*25);
   }
 }
 
