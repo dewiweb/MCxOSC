@@ -2,6 +2,16 @@ var ipcRenderer = require('electron').ipcRenderer
 var oscAddr = new Array("/Channels")
 
 
+//ipcRenderer.on('blur', function(event){
+//  console.log('blur');
+//  window.blur();
+//})
+
+//ipcRenderer.on('focus', function(event){
+//  console.log('focus');
+//  window.focus();
+//})
+
 ipcRenderer.on('udpportOK', function(event){
   var dot2 = document.getElementById("dot2");
   dot2.style.color = "green";
@@ -494,22 +504,56 @@ function modifyOscAddr(event){
 
 function SomeDeleteRowFunction(o) {
   var table = document.getElementById("tableOfConnection");
-  if(typeof o == "number"){
-    table.deleteRow(o)}
+  console.log("TYPE OF O", typeof(o));
+  
+  if(typeof(o) == "number"){
+    var myRow = o;
+    var ePath = table.rows[myRow].cells[0].innerHTML;
+    var oAddr = table.rows[myRow].cells[4].innerHTML;
+    var eVarFactor = table.rows[myRow].cells[2].innerHTML;
+    var eVarType = table.rows[myRow].cells[6].innerHTML;
+
+    console.log("ePath",ePath);
+    console.log("oAddr",oAddr);
+
+    ipcRenderer.send('deleteConnection', ePath, oAddr, myRow, eVarType, eVarFactor);
+    table.deleteRow(o)
+    console.log("delete Row", o);
+  }
     else{
      //no clue what to put here?
      var p=o.parentNode.parentNode;
-         p.parentNode.removeChild(p);
+         //p.parentNode.removeChild(p);
+         myRow = p.rowIndex;
+    console.log(myRow);
+    //sFactor = factor;
+    var ePath = table.rows[myRow].cells[0].innerHTML;
+    var oAddr = table.rows[myRow].cells[4].innerHTML;
+    var eVarFactor = table.rows[myRow].cells[2].innerHTML;
+    var eVarType = table.rows[myRow].cells[6].innerHTML;
+
+    console.log("ePath",ePath);
+    console.log("oAddr",oAddr);
+
+    ipcRenderer.send('deleteConnection', ePath, oAddr, myRow, eVarType, eVarFactor);
+    p.parentNode.removeChild(p);
+    console.log("delete row", myRow);
+    
     }
-}
+  }
+
 
 function deleteAllRows(o) {
   var table = document.getElementById("tableOfConnection");
   var numOfConn = table.rows.length;
-  for (var x=numOfConn-1; x>1; x--) {
-    table.deleteRow(x);
- }
+  for (let x=numOfConn-1; x>1 ; x--) {
+    setTimeout(() => {
+    SomeDeleteRowFunction((table.rows.length)-1);
+    }, x*25)
+  } 
 }
+
+  
 
 function sendConnection(o){
   var table = document.getElementById("tableOfConnection");

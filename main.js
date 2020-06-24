@@ -33,6 +33,8 @@ function createWindow () {
   // et charger le fichier index.html de l'application.
   win.loadFile('index.html')
   
+
+
   // Ouvre les DevTools.
   //win = null
 
@@ -195,6 +197,12 @@ function createWindow () {
          
                    console.log('OSC --> EMBER+ : ', (rOrArgs*sFactor).toFixed(0));
                   })
+                  ipcMain.on("deleteConnection",async function(event, ePath, oAddr, myRow, eVarType, sFactor){
+                    const req = await c.getElementByPath(ePath)
+                     c.unsubscribe(req)
+                     console.log('unsuscribe to ', ePath);
+                     
+                  })
                 })
               })
             }
@@ -205,7 +213,8 @@ function createWindow () {
   // win.setAutoHideMenuBar(true)
   win.autoHideMenuBar = "true"
   win.menuBarVisible = "false"
-  win.w
+    // win.webContents.send('blur', event);
+    // win.webContents.send('focus', event);
 //end of create window
  }
 
