@@ -40,6 +40,7 @@ function addressToPath (address){
 module.exports = { oscToEmber, embChPath, embFadLevPath, pathToAddress, addressToPath }
 
 module.exports = {
+  //copy of https://github.com/jean-emmanuel/open-stage-control/blob/master/src/client/widgets/utils.js
 
   clip: function(value,range) {
 
@@ -58,7 +59,7 @@ module.exports = {
   //     log: true, or manual log scale (max log value)
   //     revertLog: boolean
 
-  
+
   mapToScale: function(value, rangeIn, rangeOut, decimals, log, revertlog) {
 
       // clip in
