@@ -14,7 +14,6 @@ before_script:
   - yarn add electron-builder --dev
 script:
   - npm run dist 
-before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
+
 
 
