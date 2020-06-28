@@ -1,6 +1,11 @@
 anHsudo: required
 dist: bionic
 language: node_js
+before_install:
+  - sudo dpkg --add-architecture i386
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq wine-stable
+  -
 matrix:
   include:
     - os: osx
@@ -12,6 +17,8 @@ matrix:
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
     - os: linux
+      language: node_js
+      node_js: "12"
       services: docker
       language: generic
 
