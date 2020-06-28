@@ -1,6 +1,10 @@
 sudo: required
 dist: xenial
 language: node_js
+before_install:
+  - npm i -D electron@latest
+  - yarn add electron-builder --dev
+  - npm i osc
 matrix:
   include:
     - os: osx
