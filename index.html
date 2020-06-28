@@ -140,6 +140,25 @@
             <input class="button" id="modifyOscAddr" style="text-align: center;" type="submit" value="Modify!" >
           </div>
           <br>
+          <div style="display:block; padding-left: 7%; font-weight: normal; font-size: smaller;">
+            <div  class='toggle' id='switcher1' >
+              <script>switcher1.addEventListener('click', remapMode)</script>
+              <div class='glow-comp'></div>
+              <div class='toggle-button'></div>
+              </div>
+            <span style="font-style: italic;" title="">Remap Values (only avalaible for Integer parameters!) &ensp; &ensp; </span>
+            <label id="labelErange" style="visibility: hidden;" class="unhideOnRemap">
+              <span id="eRange" title="ember+ range"></span>
+            </label>
+            <label id="labelOrange" style="visibility: hidden;" class="unhideOnRemap" title="OSC range &nbsp;example:&nbsp;min,max" value="">
+              <input type="text" id="oRange">
+            </label>
+            <label id="logCheckbox" style="visibility: hidden;"  class="unhideOnRemap">log to linear
+            <input type="checkbox" id="lCheckbox" name="checkbox">
+            <span class="checkmark"></span>
+            </label>
+          </div>
+          <br>
           <br>
         </form>
       </div>
@@ -161,8 +180,8 @@
           <td class="little">OSC value</td>
           <td>ADDRESS</td>
           <td></td>
-          <td>type</td>
-          <td class="hiddenTd"></td>
+          <td class="little">type</td>
+          <td class="little">Math</td>
           <td class="little">Min</td>
           <td class="hiddenTd"></td>
           <td class="little">Max</td>

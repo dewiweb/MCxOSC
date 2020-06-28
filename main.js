@@ -23,7 +23,7 @@ function createWindow () {
   // Cree la fenetre du navigateur.
   let win = new BrowserWindow({
     width: 1000,
-    height: 800,
+    height: 900,
     webPreferences: {
       nodeIntegration: true
     },
@@ -137,7 +137,7 @@ function createWindow () {
             win.webContents.send('oServerOK');
 
             //Create ember+ subscription when connection send
-            ipcMain.on('newConnection', async function(event, ePath, oAddr, myRow, eVarType, sFactor){
+            ipcMain.on('newConnection', async function(event, ePath, oAddr, myRow, eVarType, sFactor, eMin, eMax, oMin, oMax, eVarCurve){
               console.log("sFactor",sFactor);
               sFactor= Number(sFactor);
               const req = await c.getElementByPath(ePath)
@@ -151,30 +151,46 @@ function createWindow () {
 
                 console.log("stringEpath", stringEpath);
 
-                if(eVarType == "Integer"){
+                if(eVarType == "Integer" && eVarCurve == "lin"){
+                  const value = mainFunctions.mapToScale(Number(emberValue), [Number(eMin),Number(eMax)], [Number(oMin),Number(oMax)], 2 )
                   oscCli.send({
                     address: oAddr,
                     args: [
                       {
                         type: "f",
-                        value: Number(req.contents.value)/Number(sFactor),
+                        value: Number(value),
                       }
                           ]
                               },  oServerIP, oServerPort);
 
-                              console.log('EMBER+ --> OSC : ', req.contents.value)
+                              console.log('EMBER+ -lin-> OSC : ', value)
 
-                  }else if (eVarType == "Boolean") {
+                  }else if (eVarType == "Integer" && eVarCurve == "log"){
+                    const value = mainFunctions.mapToScale(Number(emberValue), [Number(eMin),Number(eMax)], [Number(oMin),Number(oMax)], 2, true )
+                    oscCli.send({
+                      address: oAddr,
+                      args: [
+                        {
+                          type: "f",
+                          value: Number(value),
+                        }
+                            ]
+                                },  oServerIP, oServerPort);
+  
+                                console.log('EMBER+ -log-> OSC : ', value)
+  
+                    }
+                  else if (eVarType == "Boolean"|evartype == "String") {
             
                         oscCli.send({
                           address: oAddr,
                         args: [
                           {
                             type: "s",
-                            value: req.contents.value.toString(),
+                            value: emberValue.toString(),
                           }
                         ]                        }, oServerIP, oServerPort);
-                        console.log('EMBER+ --> OSC : ', req.contents.value)
+                        console.log('EMBER+ -bool-> OSC : ', emberValue)
 
                       }
                     })
@@ -190,12 +206,20 @@ function createWindow () {
                   })
                     
                   })
-                  ipcMain.on('reSendOrArgs', async function(event, rOrArgs, rEaddr, sFactor){
+                  ipcMain.on('reSendOrArgs', async function(event, rOrArgs, rEaddr, sFactor, eVarType, oMin, oMax, eMin, eMax, eVarCurve){
                     const rereq = await c.getElementByPath(rEaddr);
-                    sFactor = Number(sFactor);
-                   c.setValue((rereq), (rOrArgs*sFactor).toFixed(0));
-         
-                   console.log('OSC --> EMBER+ : ', (rOrArgs*sFactor).toFixed(0));
+                    if (eVarType == "Integer" && eVarCurve == "lin"){
+                      const value = mainFunctions.mapToScale(Number(rOrArgs), [Number(eMin),Number(eMax)], [Number(oMin),Number(oMax)], 2 )
+                      c.setValue((rereq), value.toFixed(0));   
+                      console.log('OSC -lin-> EMBER+ : ', value.toFixed(0));
+                    }else if (eVarType == "Integer" && eVarCurve == "log"){
+                      const value = mainFunctions.mapToScale(Number(rOrArgs), [Number(eMin),Number(eMax)], [Number(oMin),Number(oMax)], 2, true,-1 )
+                      c.setValue((rereq), value.toFixed(0));
+                      console.log('OSC -log-> EMBER+ : ', value.toFixed(0));
+                    }else{
+                      c.setValue((rereq), rOrArgs);
+                      console.log(("OSC -bool-> EMBER+", rOrArgs));
+                    }
                   })
                   ipcMain.on("deleteConnection",async function(event, ePath, oAddr, myRow, eVarType, sFactor){
                     const req = await c.getElementByPath(ePath)

@@ -71,6 +71,13 @@ button{
 input {
   text-align:center; }
 
+input[type=text], input[type=number], select{
+  border-radius: 10px;
+  border-style: none;
+  -webkit-border-radius: 10px;
+  appearance: textfield;
+}
+
 .form {
   border: solid #47496c;
   padding: 0.001px;
@@ -118,6 +125,13 @@ caption{
   width: 40px;
   height: 20px;
 }
+
+#switcher1{
+  /* top: 25%;*/
+   left: 3%; 
+   width: 40px;
+   height: 20px;
+ }
 
 .toggle{
   position: absolute;
