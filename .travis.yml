@@ -10,7 +10,8 @@ cache:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
-
+before_script:
+  - yarn add electron-builder --dev
 script:
   - npm run dist 
 before_cache:
