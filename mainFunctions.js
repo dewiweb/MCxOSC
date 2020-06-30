@@ -1,46 +1,8 @@
 const {dialog} = require('electron');
 const fs = require('fs');
 
-function oscToEmber(oscBundle) {
- let oscArgs = JSON.stringify(oscBundle.args);
-    oscArgs = oscArgs.replace(/\s|\[|\]/g,"");
-    oscArgs = JSON.parse(oscArgs);
-    oscArgs = oscArgs.value;
-   // oscArgs = (Number(oscArgs)*32).toFixed(0);
-   oscArgs = Number(oscArgs);
-    return oscArgs
-}
-
-function embChPath (chNumb){
- let eChPath = 'Channels.Inputs.INP   ';
-     eChPath = eChPath.concat(chNumb.toString());
- return eChPath
-}
-
-function embFadLevPath (eChPath){
-  let eFadLevPath = eChPath.concat('.Fader.Fader Level');
-  return eFadLevPath
-}
-
-function pathToAddress (path){
-  let oscAddress = path.replace(/\./g,'/');
-      slash = "/";
-      oscAddress = slash.concat(oscAddress);
-      return oscAddress
-}
-
-function addressToPath (address){
-  let path = address.replace(/\//g, '.');
-      path = path.slice(1);
-      return path
-}
-
-
-
-module.exports = { oscToEmber, embChPath, embFadLevPath, pathToAddress, addressToPath }
-
 module.exports = {
-  //copy of https://github.com/jean-emmanuel/open-stage-control/blob/master/src/client/widgets/utils.js
+  //copied from https://github.com/jean-emmanuel/open-stage-control/blob/master/src/client/widgets/utils.js
 
   clip: function(value,range) {
 
@@ -49,8 +11,7 @@ module.exports = {
     if (isNaN(value)) value = range[0]
 
     return Math.max(Math.min(range[0], range[1]), Math.min(value, Math.max(range[0], range[1])))
-
-},
+  },
   // map a value from a scale to another
   //     value: number
   //     rangeIn: [number, number]
@@ -58,7 +19,6 @@ module.exports = {
   //     decimals: number (-1 to bypass)
   //     log: true, or manual log scale (max log value)
   //     revertLog: boolean
-
 
   mapToScale: function(value, rangeIn, rangeOut, decimals, log, revertlog) {
 
@@ -100,39 +60,36 @@ module.exports = {
 
   },
 
-   oscToEmber: function(oscBundle) {
+  oscToEmber: function(oscBundle) {
     let oscArgs = JSON.stringify(oscBundle.args);
-       oscArgs = oscArgs.replace(/\s|\[|\]/g,"");
-       oscArgs = JSON.parse(oscArgs);
-       oscArgs = oscArgs.value;
-      // oscArgs = (Number(oscArgs)*32).toFixed(0);
-      oscArgs = Number(oscArgs);
-       return oscArgs
-   },
+    oscArgs = oscArgs.replace(/\s|\[|\]/g,"");
+    oscArgs = JSON.parse(oscArgs);
+    oscArgs = oscArgs.value;
+    oscArgs = Number(oscArgs);
+    return oscArgs
+  },
    
-   embChPath: function(chNumb){
+  embChPath: function(chNumb) {
     let eChPath = 'Channels.Inputs.INP   ';
-        eChPath = eChPath.concat(chNumb.toString());
+    eChPath = eChPath.concat(chNumb.toString());
     return eChPath
-   },
+  },
    
-   embFadLevPath: function(eChPath){
-     let eFadLevPath = eChPath.concat('.Fader.Fader Level');
-     return eFadLevPath
-   },
+  embFadLevPath: function(eChPath) {
+    let eFadLevPath = eChPath.concat('.Fader.Fader Level');
+    return eFadLevPath
+  },
    
-   pathToAddress: function(path){
-     let oscAddress = path.replace(/\./g,'/');
-         slash = "/";
-         oscAddress = slash.concat(oscAddress);
-         return oscAddress
-   },
+  pathToAddress: function(path) {
+    let oscAddress = path.replace(/\./g,'/');
+    slash = "/";
+    oscAddress = slash.concat(oscAddress);
+    return oscAddress
+  },
    
-  addressToPath: function(address){
-     let path = address.replace(/\//g, '.');
-         path = path.slice(1);
-         return path
-   }
-   
-
+  addressToPath: function(address) {
+    let path = address.replace(/\//g, '.');
+    path = path.slice(1);
+    return path
+  }
 }
