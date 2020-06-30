@@ -12,8 +12,27 @@ const mainFunctions = require('./mainFunctions');
 const { dialog } = require('electron')
 const fs = require('fs');
 const { openFile } = require('./mainFunctions');
+var recDir = app.getPath('documents')+'/MCxOSC';
+if (!fs.existsSync(recDir)) {
+  fs.mkdirSync(recDir)
+}
+var openDir = app.getPath('documents')+'/MCxOSC';
 const recOptions = {
-  defaultPath: app.getPath('documents') + '/MySession.session',
+  filters :[
+    {name: 'Session file', extensions: ['session']},
+    {name: 'All Files', extensions: ['*']}
+   ],
+  title: "Save your session in a *.session file",
+  defaultPath: recDir + '/MySession.session',
+}
+const openOptions = {
+  filters :[
+    {name: 'Session file', extensions: ['session']},
+    {name: 'All Files', extensions: ['*']}
+   ],
+  properties: ['openFile', 'multiSelections'],
+  title: "Choose a *.session file",
+  defaultPath: openDir,
 }
 
 
@@ -66,7 +85,7 @@ function createWindow() {
   })
 
   ipcMain.on('openFile', function (event) {
-    filename = dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
+    filename = dialog.showOpenDialog(null, openOptions, {})
       .then(result => {
         filename = result.filePaths;
         //console.log(filename);
