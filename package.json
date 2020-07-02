@@ -1,6 +1,6 @@
 {
   "name": "mcxosc",
-  "version": "0.0.8-alpha",
+  "version": "0.0.9-alpha",
   "description": "An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles/ based on https://github.com/nrkno/tv-automation-emberplus-connection",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "install-app-deps",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder "
+    "dist": "electron-builder -w --x64"
       },
   "author": "dewiweb",
   "license": "MIT",
@@ -26,12 +26,22 @@
     "winston-color": "^1.0.0"
   },
   "build": {
+    "artifactName": "${productName}-${version}-${os}_${arch}.${ext}",
+    "buildDependenciesFromSource": true, 
     "appId": "MCxOSC",
     "linux": {
       "category": "AudioVideo",
       "icon": "./assets/icons",
       "target": {
         "target": "appimage",
+        "arch": "x64"
+      }
+    },
+    "win": {
+      "artifactName": "${productName}-${version}-${os}_x64.${ext}",
+      "icon": "./assets/icons",
+      "target": {
+        "target": "portable",
         "arch": "x64"
       }
     }

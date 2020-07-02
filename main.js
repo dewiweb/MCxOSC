@@ -11,7 +11,7 @@ const { app, BrowserWindow } = require('electron');
 const mainFunctions = require('./mainFunctions');
 const { dialog } = require('electron')
 const fs = require('fs');
-const { openFile } = require('./mainFunctions');
+const { openFile, relaunch } = require('./mainFunctions');
 var recDir = app.getPath('documents')+'/MCxOSC';
 if (!fs.existsSync(recDir)) {
   fs.mkdirSync(recDir)
@@ -34,6 +34,7 @@ const openOptions = {
   title: "Choose a *.session file",
   defaultPath: openDir,
 }
+
 
 
 function createWindow() {
@@ -119,21 +120,34 @@ function createWindow() {
   //Setting Remote Ember+ provider IP and Port
   ipcMain.on('sendEmberServerIP', function (event, arg) {
     eServerIP = arg;
-    console.log('IP du server Ember+ distant:', arg);
 
     ipcMain.on('sendEmberServerPort', function (event, arg) {
       eserverPort = arg;
-      console.log('Port du server Ember+ distant:', arg);
 
       //Initiating connection to Remote Ember+ provider
       c = new EmberClient(eServerIP, eserverPort);
-      console.log("Connection au server Ember+:", eServerIP, ":", eserverPort, "initiated");
+
+  //    c.on('error', (e) => {
+  //      console.log("Connection to Ember+ server error/recheck IP and Port!");
+  //      
+  //        win.webContents.send('eServConnError');
+  //      
+  //      app.relaunch()
+  //      app.exit(0)
+  //    })
+      c.on('connected', (e) => {
+        console.log("Ember+ Server ",eServerIP, ":", eserverPort, " connection ok");
+      win.webContents.send('eServerOK');
+    })
+  //    c.on('disconnected', (e) => {
+  //      console.log("Disconnected from Ember+ Server");
+  //    }) 
+  //    
 
       async function main() {
-        await c.connect()
-        console.log("connection ok");
-
-        win.webContents.send('eServerOK');
+        
+         await c.connect()  
+        //console.log("connection ok");
         await (await c.getDirectory(c.tree)).response
 
         //Setting Remote OSC Server IP and Port
@@ -161,7 +175,7 @@ function createWindow() {
                 var stringEpath = JSON.stringify(ePath);
                 //console.log("ePath", ePath);
 
-                console.log("stringEpath", stringEpath);
+                console.log("suscribe to ", ePath);
 
                 //Sending received values from Ember+ to OSC
                 if (eVarType == "Integer" && eVarCurve == "lin") {
@@ -189,7 +203,7 @@ function createWindow() {
                   }, oServerIP, oServerPort);
                   console.log('EMBER+ -log-> OSC : ', value)
                 }
-                else if (eVarType == "Boolean" | evartype == "String") {
+                else if (eVarType == "String") {
 
                   oscCli.send({
                     address: oAddr,
@@ -197,6 +211,32 @@ function createWindow() {
                       {
                         type: "s",
                         value: emberValue.toString(),
+                      }
+                    ]
+                  }, oServerIP, oServerPort);
+                  console.log('EMBER+ -string-> OSC : ', emberValue)
+                }
+                else if (eVarType == "Boolean" && emberValue == true) {
+
+                  oscCli.send({
+                    address: oAddr,
+                    args: [
+                      {
+                        type: "f",
+                        value: 1,
+                      }
+                    ]
+                  }, oServerIP, oServerPort);
+                  console.log('EMBER+ -bool-> OSC : ', emberValue)
+                }
+                else if (eVarType == "Boolean" && emberValue == false) {
+
+                  oscCli.send({
+                    address: oAddr,
+                    args: [
+                      {
+                        type: "f",
+                        value: 0,
                       }
                     ]
                   }, oServerIP, oServerPort);
@@ -223,9 +263,15 @@ function createWindow() {
                 const value = mainFunctions.mapToScale(Number(rOrArgs), [Number(eMin), Number(eMax)], [Number(oMin), Number(oMax)], 2, true, -1)
                 c.setValue((rereq), value.toFixed(0));
                 console.log('OSC -log-> EMBER+ : ', value.toFixed(0));
-              } else {
-                c.setValue((rereq), rOrArgs);
+              } else if(eVarType == "Boolean" && rOrArgs == "1"){
+                c.setValue((rereq), true);
                 console.log(("OSC -bool-> EMBER+", rOrArgs));
+              } else if(eVarType == "Boolean" && rOrArgs == "0"){
+                c.setValue((rereq), false);
+                console.log(("OSC -bool-> EMBER+", rOrArgs));
+              } else{
+                c.setValue((rereq), rOrArgs);
+                console.log(("OSC -string-> EMBER+", rOrArgs));
               }
             })
             ipcMain.on("deleteConnection", async function (event, ePath, oAddr, myRow, eVarType, sFactor) {
@@ -243,6 +289,7 @@ function createWindow() {
 
   win.autoHideMenuBar = "true"
   win.menuBarVisible = "false"
+
 }
 
 app.whenReady().then(createWindow)
@@ -258,3 +305,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+
+

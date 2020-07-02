@@ -8,6 +8,9 @@ ipcRenderer.on('udpportOK', function (event) {
 })
 
 ipcRenderer.on('eServerOK', function (event) {
+  const add1 = document.getElementById('add1');
+  add1.removeChild(add1.firstChild);
+  add1.textContent = "OK!  Address : " + EmberServerIP + "   /   Port : " + EmberServerPort;
   var dot1 = document.getElementById("dot1");
   dot1.style.color = "green";
 })
@@ -150,6 +153,14 @@ ipcRenderer.on('sendFileContent', function (event, content) {
     }
   });
 })
+
+ipcRenderer.on('eServConnError', function(event){
+  var add1Error = document.getElementById("add1");
+  var dot1Error = document.getElementById("dot1");
+  add1Error.innerHTML = "Server not responding! Verify IP:Port";
+  dot1Error.style.color = "red";
+})
+
 //-----------------------------------------//
 
 function addGenBtns() {
@@ -170,7 +181,7 @@ function makeVisible(op) {
 
 function displayForm1(event) {
   const form1 = document.getElementById('form1');
-  const add1 = document.getElementById('add1');
+  
   var ip1 = document.getElementById("ip1").value;
   var ip2 = document.getElementById("ip2").value;
   var ip3 = document.getElementById("ip3").value;
@@ -179,8 +190,7 @@ function displayForm1(event) {
   var data = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
   EmberServerIP = data;
   EmberServerPort = Number(port);
-  add1.removeChild(add1.firstChild);
-  add1.textContent = "OK!  Address : " + data + "   /   Port : " + port;
+  
   ipcRenderer.send('sendEmberServerIP', data);
   ipcRenderer.send('sendEmberServerPort', Number(port));
   event.preventDefault();
@@ -289,9 +299,14 @@ function submitEmberPath(event) {
   cell6.appendChild(btnDel);
   cell7.innerHTML = eVarType;
   cell8.innerHTML = eVarCurve;
+  if (eVarFactor !== ""){
   cell9.innerHTML = eVarMin + "/" + (Number(eVarMin) / Number(eVarFactor)).toFixed(0);
-  cell10.innerHTML = "";
   cell11.innerHTML = eVarMax + "/" + (Number(eVarMax) / Number(eVarFactor)).toFixed(0);
+  }else {
+    cell9.innerHTML = eVarMin + "/" + 0;
+    cell11.innerHTML = eVarMax + "/" + 1; 
+  }
+  cell10.innerHTML = "";
   cell3.style.fontSize = 'x-small';
   cell7.style.fontSize = 'x-small';
   cell8.style.fontSize = 'x-small';
@@ -785,6 +800,8 @@ function tableToJson(table) {
   //console.log("lejson de la table", data);
   tableData = JSON.stringify(data, null, 2)
 }
+/////////////////////////////
+
 
 
 
