@@ -615,8 +615,8 @@ function selectedOption(slct) {
     var detailsArray = details.split("\n");
     //console.log("detailsArray;", detailsArray);
     eVarType = detailsArray[0];
-    eVarMin = "true";
-    eVarMax = "false";
+    eVarMin = "false";
+    eVarMax = "true";
     eVarFactor = "";
     eVarCurve = "";
     if (detailsArray[0] !== "Boolean") {
