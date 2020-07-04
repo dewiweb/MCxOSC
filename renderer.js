@@ -161,6 +161,13 @@ ipcRenderer.on('eServConnError', function(event){
   dot1Error.style.color = "red";
 })
 
+ipcRenderer.on('appVersion', function (event, appVersion) {
+  document.getElementById("appVersion").innerHTML = document.getElementById("appVersion").innerHTML + appVersion;
+  document.getElementById("filepath").innerHTML = "none";
+  console.log("appVersion:", appVersion);
+  
+})
+
 //-----------------------------------------//
 
 function addGenBtns() {

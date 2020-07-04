@@ -34,8 +34,10 @@ const openOptions = {
   title: "Choose a *.session file",
   defaultPath: openDir,
 }
+const appVersion = app.getVersion()
 
-
+     
+  
 
 function createWindow() {
 
@@ -49,6 +51,7 @@ function createWindow() {
   })
 
   win.loadFile('index.html')
+  
 
   //---Menu interactions Section---//
 
@@ -142,8 +145,8 @@ function createWindow() {
   //    c.on('disconnected', (e) => {
   //      console.log("Disconnected from Ember+ Server");
   //    }) 
-  //    
-
+  //  
+  
       async function main() {
         
          await c.connect()  
@@ -289,10 +292,16 @@ function createWindow() {
 
   win.autoHideMenuBar = "true"
   win.menuBarVisible = "false"
-
-}
+  win.webContents.on('did-finish-load', () => {
+  console.log("appVersion :", appVersion);
+  win.webContents.send('appVersion', app.getVersion());
+  
+  })
+  }
 
 app.whenReady().then(createWindow)
+
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
