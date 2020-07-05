@@ -174,9 +174,9 @@ function addGenBtns() {
   var table = document.getElementById("tableOfConnection");
   var btnSuscribeAll = document.createElement("BUTTON");
   var btnDeleteAll = document.createElement("BUTTON");
-  btnDeleteAll.innerHTML = "Delete All"
+  btnDeleteAll.innerHTML = "&darr;X"
   btnDeleteAll.setAttribute('onClick', 'deleteAllRows(this)'); //function not created yet
-  btnSuscribeAll.innerHTML = "Connect All!"
+  btnSuscribeAll.innerHTML = "Go&darr;"
   btnSuscribeAll.setAttribute('onClick', 'sendAllConnections(this)');
   table.rows[1].cells[5].appendChild(btnSuscribeAll);
   table.rows[1].cells[5].appendChild(btnDeleteAll);
@@ -649,26 +649,35 @@ function advancedMode(e) {
   var slct1 = document.getElementById("slct1");
   var eChanNumb = document.getElementById("eChanNumb");
   var eChanNumbPrefix = document.getElementById("eChanNumbPrefix");
+  var iCNPLabel = document.getElementById("iCNPLabel");
   if (switcher.className == "toggle") {
     switcher.className = "toggle toggle-on";
+    
+    iCNPLabel.style.visibility = "hidden";
+    stayOnAdvanced[0].style.display = "block";
     stayOnAdvanced[0].style.visibility = "visible";
-    stayOnAdvanced[0].setAttribute('size', "");
+    stayOnAdvanced[0].setAttribute('size', "75%");
     for (var i = 0; i < hideOnAdvanced.length; i++) {
-      hideOnAdvanced[i].style.visibility = "hidden";
+      hideOnAdvanced[i].style.display = "none";
     };
     slct0.required = false;
     slct1.required = false;
     eChanNumb.required = false;
     eChanNumbPrefix.value = ""
+    iCNPLabel.style.display = "inline-block";
+    hideOnAdvanced[0].style.display = "inline-block";
+    hideOnAdvanced[0].style.visibility = "hidden";
   } else {
     switcher.className = "toggle";
     stayOnAdvanced[0].setAttribute('size', "3");
     for (var i = 0; i < hideOnAdvanced.length; i++) {
-      hideOnAdvanced[i].style.visibility = "visible";
+      hideOnAdvanced[i].style.display = "inline-block";
     };
     slct0.required = true;
     slct1.required = true;
     eChanNumb.required = true;
+    iCNPLabel.style.visibility = "visible";
+    hideOnAdvanced[0].style.visibility = "visible";
   };
 }
 
