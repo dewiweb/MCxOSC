@@ -18,7 +18,7 @@ class S101Client extends S101Socket_1.default {
     constructor(address, port = DEFAULT_PORT, autoConnect) {
         super();
         this.autoConnect = false;
-        this._autoReconnect = true;
+        this._autoReconnect = false;
         this._autoReconnectDelay = AUTO_RECONNECT_DELAY;
         this._connectionAttemptTimer = undefined;
         this._reconnectAttempt = 0;
@@ -95,6 +95,12 @@ class S101Client extends S101Socket_1.default {
         this._shouldBeConnected = false;
         return super.disconnect(timeout);
     }
+    handleClose() {
+        var _a;
+        if (this.keepaliveIntervalTimer)
+            clearInterval(this.keepaliveIntervalTimer);
+        (_a = this.socket) === null || _a === void 0 ? void 0 : _a.destroy();
+    }
     _autoReconnectionAttempt() {
         if (this._autoReconnect) {
             if (this._reconnectAttempts > 0) {
@@ -124,6 +130,7 @@ class S101Client extends S101Socket_1.default {
     }
     _onConnect() {
         this._clearConnectionAttemptTimer();
+        this.startKeepAlive();
         // this._sentKeepalive = Date.now()
         // this._receivedKeepalive = this._sentKeepalive + 1 // for some reason keepalive doesn't return directly after conn.
         this.status = Client_1.ConnectionStatus.Connected;
