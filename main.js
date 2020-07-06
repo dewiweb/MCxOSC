@@ -36,9 +36,7 @@ const openOptions = {
 }
 const appVersion = app.getVersion()
 
-     
-  
-
+ 
 function createWindow() {
 
     let win = new BrowserWindow({
@@ -145,11 +143,24 @@ function createWindow() {
   //    c.on('disconnected', (e) => {
   //      console.log("Disconnected from Ember+ Server");
   //    }) 
+  process.on('uncaughtException', function (err) {
+    console.log(err);
+    win.webContents.send('eServConnError');
+}); 
   //  
   
       async function main() {
         
-         await c.connect()  
+         //await c.connect()  
+
+         const err = await c.connect()
+         if (err) { // err = true when the first connection attempt fails (depending on timeout)
+          console.log('Initial connection unsuccessful', err);
+          //win.webContents.send('eServConnError');
+             // app.relaunch()
+             // app.exit(0)
+          return
+        }
         //console.log("connection ok");
         await (await c.getDirectory(c.tree)).response
 
