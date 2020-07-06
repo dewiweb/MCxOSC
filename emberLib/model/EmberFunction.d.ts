@@ -1,4 +1,4 @@
-import { EmberElement, ElementType } from './EmberElement';
+import { EmberBaseElement, ElementType } from './EmberElement';
 import { FunctionArgument } from './FunctionArgument';
 import { RelativeOID } from '../types/types';
 export { EmberFunction, EmberFunctionImpl };
@@ -6,7 +6,7 @@ export { EmberFunction, EmberFunctionImpl };
  *  Function call.  A means to make a remote procedure call throug the Ember
  *  interface. Function are invoked using the [Invoke] command.
  */
-interface EmberFunction extends EmberElement {
+interface EmberFunction extends EmberBaseElement {
     type: ElementType.Function;
     /** Name. */
     identifier?: string;

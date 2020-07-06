@@ -124,9 +124,6 @@ function encodeTree(el, writer) {
             writer.endSequence();
         }
     }
-    else if (el.contents.type === EmberElement_1.ElementType.Template) {
-        Template_1.encodeTemplate(el.contents, writer);
-    }
     writer.endSequence(); // end node
 }
 exports.encodeTree = encodeTree;

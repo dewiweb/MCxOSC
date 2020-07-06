@@ -18,6 +18,7 @@ export default class S101Client extends S101Socket {
     constructor(address: string, port?: number, autoConnect?: boolean);
     connect(timeout?: number): Promise<Error | void>;
     disconnect(timeout?: number): Promise<void>;
+    handleClose(): void;
     _autoReconnectionAttempt(): void;
     private _clearConnectionAttemptTimer;
     private _onConnect;

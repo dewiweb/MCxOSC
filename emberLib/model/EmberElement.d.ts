@@ -1,4 +1,10 @@
-export { ElementType, EmberElement, isEmberElement };
+import { Parameter } from './Parameter';
+import { EmberFunction } from './EmberFunction';
+import { EmberNode } from './EmberNode';
+import { Matrix } from './Matrix';
+import { Command } from './Command';
+import { Template } from './Template';
+export { ElementType, EmberElement, EmberBaseElement, isEmberElement };
 /** Type specifyer for ember elements. */
 declare enum ElementType {
     Parameter = "PARAMETER",
@@ -8,8 +14,9 @@ declare enum ElementType {
     Function = "FUNCTION",
     Template = "TEMPLATE"
 }
+declare type EmberElement = Command | EmberFunction | EmberNode | Matrix | Parameter | Template;
 /** Generic type for all ember elements. */
-interface EmberElement {
+interface EmberBaseElement {
     type: ElementType;
 }
 declare function isEmberElement(obj: any): obj is EmberElement;

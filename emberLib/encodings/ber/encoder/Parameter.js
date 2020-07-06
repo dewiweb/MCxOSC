@@ -47,7 +47,8 @@ function encodeParameter(parameter, writer) {
             // case ParameterType.Trigger:
             // 	break
             case Parameter_1.ParameterType.Enum:
-                writer.writeEnumeration(value, Ber.BERDataTypes.ENUMERATED);
+                // value is encoded as Int64, it refers to the line number of the enumeration
+                writer.writeInt(value, Ber.BERDataTypes.INTEGER);
                 break;
             case Parameter_1.ParameterType.Octets:
                 writer.writeBuffer(value, Ber.BERDataTypes.OCTETSTRING);

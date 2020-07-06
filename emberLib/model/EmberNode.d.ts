@@ -1,11 +1,11 @@
-import { EmberElement, ElementType } from './EmberElement';
+import { EmberBaseElement, ElementType } from './EmberElement';
 import { RelativeOID } from '../types/types';
 export { EmberNode, EmberNodeImpl };
 /**
  *  A node represents a device or one of its components. Like the parameter,
  *  it must contain a number which identifies the node while the session is active.
  */
-interface EmberNode extends EmberElement {
+interface EmberNode extends EmberBaseElement {
     type: ElementType.Node;
     /** Name of the node, unique within the current context. */
     identifier?: string;

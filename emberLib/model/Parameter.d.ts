@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { EmberElement, ElementType } from './EmberElement';
+import { EmberBaseElement, ElementType } from './EmberElement';
 import { EmberValue, MinMax, StringIntegerCollection, RelativeOID } from '../types/types';
 import { StreamDescription } from './StreamDescription';
 export { Parameter, ParameterType, ParameterAccess, isParameter, ParameterImpl };
@@ -25,7 +25,7 @@ declare enum ParameterAccess {
  *  A value may be _null_, allowing a provider to inform a consumer that a value
  *  is not currently present.
  */
-interface Parameter extends EmberElement {
+interface Parameter extends EmberBaseElement {
     type: ElementType.Parameter;
     /** Hint to the parameter's type. */
     parameterType: ParameterType;

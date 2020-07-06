@@ -1,4 +1,4 @@
-import { ElementType, EmberElement } from './EmberElement';
+import { ElementType, EmberBaseElement } from './EmberElement';
 import { Parameter } from './Parameter';
 import { Matrix } from './Matrix';
 import { EmberFunction } from './EmberFunction';
@@ -9,7 +9,7 @@ export { Template, TemplateImpl };
  *  Common set of parameters, attributes and sub-trees that can be referred to
  *  by other elements.
  */
-interface Template extends EmberElement {
+interface Template extends EmberBaseElement {
     type: ElementType.Template;
     /** Templated properties. */
     element?: NumberedTreeNode<Parameter | EmberNode | Matrix | EmberFunction>;
@@ -17,8 +17,8 @@ interface Template extends EmberElement {
     description?: string;
 }
 declare class TemplateImpl implements Template {
-    element?: NumberedTreeNode<Parameter | EmberFunction | Matrix | EmberNode> | undefined;
+    element?: NumberedTreeNode<Parameter | EmberFunction | EmberNode | Matrix> | undefined;
     description?: string | undefined;
     readonly type: ElementType.Template;
-    constructor(element?: NumberedTreeNode<Parameter | EmberFunction | Matrix | EmberNode> | undefined, description?: string | undefined);
+    constructor(element?: NumberedTreeNode<Parameter | EmberFunction | EmberNode | Matrix> | undefined, description?: string | undefined);
 }

@@ -1,4 +1,4 @@
-import { EmberElement, ElementType } from './EmberElement';
+import { EmberBaseElement, ElementType } from './EmberElement';
 import { Connection } from './Connection';
 import { Label } from './Label';
 import { RelativeOID } from '../types/types';
@@ -36,7 +36,7 @@ interface Connections {
  *  A two-dimensional array of Boolean values used for eg. signal routing, bus
  *  assignments on mixing consoles etc..
  */
-interface Matrix extends EmberElement {
+interface Matrix extends EmberBaseElement {
     type: ElementType.Matrix;
     /** Target objects, the columns of the matrix. */
     targets?: Array<number>;
