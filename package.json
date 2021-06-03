@@ -6,10 +6,9 @@
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder -wl --x64"
-      },
+  },
   "author": "dewiweb",
   "license": "MIT",
   "devDependencies": {
@@ -27,7 +26,7 @@
   },
   "build": {
     "artifactName": "${productName}-${version}-${os}_${arch}.${ext}",
-    "buildDependenciesFromSource": true, 
+    "buildDependenciesFromSource": true,
     "appId": "MCxOSC",
     "linux": {
       "category": "AudioVideo",

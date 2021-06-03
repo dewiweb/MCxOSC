@@ -114,13 +114,13 @@ table, th, td {
 
 caption{
   font-weight: bold;
-   background-color: black;
+  background-color: black;
 }
 
 /*slider-checkboxes*/
 
 #switcher{
- /* top: 25%;*/
+/* top: 25%;*/
   left: 3%; 
   width: 40px;
   height: 20px;
@@ -128,10 +128,10 @@ caption{
 
 #switcher1{
   /* top: 25%;*/
-   left: 3%; 
-   width: 40px;
-   height: 20px;
- }
+  left: 3%; 
+  width: 40px;
+  height: 20px;
+}
 
 .toggle{
   position: absolute;
@@ -207,4 +207,5 @@ caption{
 #menu .button {
   margin-bottom: 15px;
   margin-top: 15px; 
+
 }
