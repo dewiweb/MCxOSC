@@ -1,3 +1,5 @@
+# ARCHIVED and replaced by https://github.com/dewiweb/MCxOSCnext
+
 # MCxOSC
 An Electron App as Bridge between Ember+ and OSC dedicated to MCx Lawo consoles(not already tested with other ember+ providers)
 Based on https://github.com/nrkno/tv-automation-emberplus-connection
